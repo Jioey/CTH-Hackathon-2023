@@ -1,12 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Front End</title>
+
+   <script type="text/javascript">
+
+      Snaplist = [2265, 3052, 3838, 4625, 5415, 6198, 6985, 7772]
+      Wiclist = [2096, 2823, 3551, 4279, 5006, 5734, 6462, 7189]
+
+      function handleIt() {
+
+         Citizenship = document.getElementById('Citizenship').value
+         Age = document.getElementById('Age').value
+         State = document.getElementById('State').value
+         Monthly_Income = document.getElementById('Monthly Income').value
+         Household_Size = document.getElementById('Household Size').value
+         Kid = document.getElementById('Kid').value
+
+         snapqualify = false
+         wicqualify = false
+
+         if (Household_Size > 8){
+            Extras = Household_Size - 8
+            snapqualify = Monthly_Income < (Snaplist[7] + Extras * 787)
+            wicqualify = Monthly_Income < (Wiclist[7] + Extras * 728)
+         }
+
+         if (Monthly_Income < Snaplist[Household_Size - 1] && Household_Size < 9) {
+            snapqualify = Monthly_Income < Snaplist[Household_Size - 1]
+            wicqualify = Monthly_Income < Wiclist[Household_Size - 1]
+         }
+         
+
+         if (Citizenship == "No") {
+            document.getElementById("demo").innerHTML = "You do not seem to be eligible for SNAP benefits. NGOs for Food Assistance: "
+            document.getElementById("link1").innerHTML = "Boston Food Bank"
+            document.getElementById("link1").href = "https://www.gbfb.org/need-food/"
+            document.getElementById("link2").innerHTML = "About Fresh"
+            document.getElementById("link2").href = "https://www.aboutfresh.org/"
+            document.getElementById("link3").innerHTML = "Free for Food"
+            document.getElementById("link3").href = "https://foodforfree.org/programs/"
+         } else {
+            if (Age == "Under 18") {
+               document.getElementById("demo").innerHTML = "You do not seem to be eligible for SNAP benefits. Here is the school lunch benefits"
+               document.getElementById("link1").innerHTML = "School Meal Program"
+               document.getElementById("link1").href = "http://www.meals4kids.org/meals"
+               document.getElementById("link2").innerHTML = "Summer Food"
+               document.getElementById("link2").href = "https://www.projectbread.org/summer-eats-program?utm_source=google&utm_medium=cpc&utm_campaign=summereats&utm_content=english-general&utm_source=google&utm_medium=cpc&utm_campaign=SmallArmy_ProjectBread_SummerEats_Search_English&gclid=EAIaIQobChMImtbx2ZSx-QIVe_rjBx0VSAsHEAAYASAAEgLOuPD_BwE"
+            } else {
+               h = Household_Size
+               if (snapqualify) {
+                  if (Kid == "Yes") {
+                     if (Age == "60+") {
+                        if (wicqualify) {
+                           document.getElementById("demo").innerHTML = "You may be eligable for Nutrition Programs for Seniors, WIC, and SNAP benefits."
+                           document.getElementById("link1").innerHTML = "Nutrition Program For Seniors"
+                           document.getElementById("link1").href = "https://www.mass.gov/nutrition-program-for-seniors"
+                           document.getElementById("link2").innerHTML = "WIC"
+                           document.getElementById("link2").href = "https://www.mass.gov/forms/apply-for-wic-online"
+                           document.getElementById("link3").innerHTML = "SNAP"
+                           document.getElementById("link3").href = "https://dtaconnect.eohhs.mass.gov/apply"
+                        } else {
+                           document.getElementById("demo").innerHTML = "You may be eligable for Senior and SNAP benefits."
+                           document.getElementById("link1").innerHTML = "Nutrition Program For Seniors"
+                           document.getElementById("link1").href = "https://www.mass.gov/nutrition-program-for-seniors"
+                           document.getElementById("link2").innerHTML = "SNAP"
+                           document.getElementById("link2").href = "https://dtaconnect.eohhs.mass.gov/apply"
+                        }
+                     } else {
+                        document.getElementById("demo").innerHTML = "You may be eligable for WIC and SNAP benefits."
+                        document.getElementById("link1").innerHTML = "WIC"
+                        document.getElementById("link1").href = "https://www.mass.gov/forms/apply-for-wic-online"
+                        document.getElementById("link2").innerHTML = "SNAP"
+                        document.getElementById("link2").href = "https://dtaconnect.eohhs.mass.gov/apply"
+                     }
+                  } else {
+                     document.getElementById("demo").innerHTML = "You may be eligable for SNAP benefits."
+                     document.getElementById("link1").innerHTML = "SNAP"
+                     document.getElementById("link1").href = "https://dtaconnect.eohhs.mass.gov/apply"
+                  }
+               } else {
+                  document.getElementById("demo").innerHTML = "You do not seem to be eligible for any benefits in our database."
+                  document.getElementById("link1").innerHTML = ":("
+               }
+            }
+         }
+      }
+
+   </script>
 </head>
+<style>
+   h1 {
+      text-align: center;
+   }
+   body {
+      text-align: center;
+   }
+   div {
+      text-align: center;
+   }
+</style>
+
 <body>
-   
+   <h1>Eligibility Calculator for Food Aid Benefits</h1>
+
+   <form method="post" action="javascript:handleIt()">
+      <label for="Citizenship">Are you a US Citizen or Green Card Holder</label>
+      <select name="Citizenship" id="Citizenship">
+         <option value="Yes">Yes</option>
+         <option value="No">No</option>
+      </select>
+
+      <br><br>
+
+      <label for="Age">Age</label>
+      <select name="Age" id="Age">
+         <option value="Under 18">Under 18</option>
+         <option value="18 to 60">18 to 60</option>
+         <option value="60+">60+</option>
+      </select>
+
+      <br><br>
+
+      <label for="State">State</label>
+      <select name="State" id="State">
+         <option value="MA">MA</option>
+      </select>
+
+      <br><br>
+
+      <label for="Monthly Income">Enter Your Income </label>
+      <input type="text" id="Monthly Income" name="Monthly Income"><br><br>
+
+      <label for="Household Size">Enter Your Household Size: </label>
+      <input type="text" id="Household Size" name="Household Size"><br><br>
+
+      <label for="Kid">Are you pregnant, postpartum, breastfeeding, or do you have a child under the age of 5</label>
+      <select name="Kid" id="Kid">
+         <option value="Yes">Yes</option>
+         <option value="No">No</option>
+      </select>
+
+      <br><br>
+
+      <input type="submit" value="Submit">
+   </form>
+
+   <p id="demo"></p>
+
+   <a id="link1"></a>
+   <a id="link2"></a>
+   <a id="link3"></a>
 </body>
+
 </html>
